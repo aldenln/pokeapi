@@ -86,11 +86,11 @@
 
         function setName({name}) {
             if(!name) {
-                qS('.name').innerHTML = '&nbsp;';
+                setText('.name', 'NÃO ENCONTRADO, BUSQUE OUTRO POKEMON');
                 return;
+            }else{
+                setText('.name', name.toUpperCase());
             }
-
-            qS('.name').innerHTML =  name.toUpperCase();
 
         }
 
@@ -99,63 +99,22 @@
                 qS('img').src = '';
                 qS('img').classList.add('placeholder');    
             } else {
-                qS('img').classList.remove('placeholder');    
+                qS('img').classList.remove('placeholder');
                 qS('img').src = sprite;
             }
         }
 
-/*
-        primeira solução:
 
-
-        function setStats({stats: stat}) {
-            if(!stat) {
-                qS('span').innerHTML = '&#45;&#45;';
-                return;
-            }
-            i=0;
-            while (i<6){
-                s = "#st"+i;
-                qS(s).innerHTML = stat[i].base_stat;
-                i++;
-            }
-*/
-
-
-/*        outra - desconstruindo na passagem de atributos da função, mapeando valores e transmitindo por arrays:
-
-        function setStats({stats: { 0: hp,
-                                    1: att,
-                                    2: def,
-                                    3: spa,
-                                    4: spd,
-                                    5: spe } }) {
-
-            if(!hp) {
-                qS('#st0').innerHTML = '&#45;&#45;';
-                return;
-            }
-
-            const poke_stats = [hp,att,def,spa,spd,spe];
-            let base_stat_map=[];
-            for (let e of poke_stats){
-                base_stat_map.push(e.base_stat)
-            }
-
-            [qS('#st0').innerHTML,qS('#st1').innerHTML,qS('#st2').innerHTML,
-             qS('#st3').innerHTML,qS('#st4').innerHTML,qS('#st5').innerHTML]=base_stat_map;
-
-        }
-        */
-
-
- //        outra - desconstruindo apenas stat em atributos da função, mapeando valores e transmitindo por arrays:
+ //     outra solução - desconstruindo apenas stat em atributos da função, mapeando valores e transmitindo por arrays:
 
         function setStats({stats: stat}){
-
-            //isso não tá funcionando
             if(!stat) {
-                qS('#st0').innerHTML = '--';
+                qS('#st0').innerHTML = '---';
+                qS('#st1').innerHTML = '---';
+                qS('#st2').innerHTML = '---';
+                qS('#st3').innerHTML = '---';
+                qS('#st4').innerHTML = '---';
+                qS('#st5').innerHTML = '---';
                 return;
             }
 
@@ -174,12 +133,8 @@
 
         }
 
-
-
-
-
         function cleanPokemonData() {
-            setPokemonData( {sprites: undefined, name: '', stats: undefined} );
+            setPokemonData( {name: '', sprites: {front_default: undefined}, stats: undefined} );
         }
 
         function setPokemonData( pokemonJson ) {
@@ -195,7 +150,7 @@
             fetch(url)
                 .then( (resp) => resp.json() )
                 .then( fn )
-                .catch( (err) => { cleanPokemonData(); alert(err); } );
+                .catch( (err) => { cleanPokemonData(); } ); //alert(err);
         
         const fetchPokemon = (name) => fetchPokeApi(
             `https://pokeapi.co/api/v2/pokemon/${name}`,
