@@ -43,27 +43,27 @@
                 <ul class="list-group list-group-flush w-100">
                     <li class="list-group-item d-flex justify-content-between align-items-center bg-light">
                         HP:
-                        <span id="st0">??</span>
+                        <span id="st0">--</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center bg-light">
                         Attack:
-                        <span id="st1">??</span>
+                        <span id="st1">--</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center bg-light">
                         Defense:
-                        <span id="st2">??</span>
+                        <span id="st2">--</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center bg-light">
                         Special Attack:
-                        <span id="st3">??</span>
+                        <span id="st3">--</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center bg-light">
                         Special Defense:
-                        <span id="st4">??</span>
+                        <span id="st4">--</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center bg-light">
                         Speed:
-                        <span id="st5">??</span>
+                        <span id="st5">--</span>
                     </li>
                   </ul>
 
@@ -122,31 +122,28 @@
 */
 
 
-//        outra:
+//        outra - desconstruindo na passagem de atributos da função, mapeando valores e transmitindo por arrays:
 
-        function setStats(
-        {stats: {
-        0: {base_stat: hp},
-        1: {base_stat: att},
-        2: {base_stat: def},
-        3: {base_stat: spa},
-        4: {base_stat: spd},
-        5: {base_stat: spe} }}) {
+        function setStats({stats: { 0: hp,
+                                    1: att,
+                                    2: def,
+                                    3: spa,
+                                    4: spd,
+                                    5: spe } }) {
 
             if(!hp) {
                 qS('#st0').innerHTML = '&#45;&#45;';
                 return;
             }
 
-            qS('#st0').innerHTML = hp;
-            qS('#st1').innerHTML = att;
-            qS('#st2').innerHTML = def;
-            qS('#st3').innerHTML = spa;
-            qS('#st4').innerHTML = spd;
-            qS('#st5').innerHTML = spe;
+            const poke_stats = [hp,att,def,spa,spd,spe];
+            let base_stat_map=[];
+            for (let e of poke_stats){
+                base_stat_map.push(e.base_stat)
+            }
 
-
-
+            [qS('#st0').innerHTML,qS('#st1').innerHTML,qS('#st2').innerHTML,
+             qS('#st3').innerHTML,qS('#st4').innerHTML,qS('#st5').innerHTML]=base_stat_map;
 
         }
 
