@@ -122,7 +122,7 @@
 */
 
 
-//        outra - desconstruindo na passagem de atributos da função, mapeando valores e transmitindo por arrays:
+/*        outra - desconstruindo na passagem de atributos da função, mapeando valores e transmitindo por arrays:
 
         function setStats({stats: { 0: hp,
                                     1: att,
@@ -146,6 +146,37 @@
              qS('#st3').innerHTML,qS('#st4').innerHTML,qS('#st5').innerHTML]=base_stat_map;
 
         }
+        */
+
+
+ //        outra - desconstruindo apenas stat em atributos da função, mapeando valores e transmitindo por arrays:
+
+        function setStats({stats: stat}){
+
+            //isso não tá funcionando
+            if(!stat) {
+                qS('#st0').innerHTML = '--';
+                return;
+            }
+
+            //desestruturando cada stat
+            const pokemon_stats = [stat[0],stat[1],stat[2],stat[3],stat[4],stat[5]];
+
+            //mapeando valores de base_stat
+            let base_stat_map=[];
+            for (let e of pokemon_stats){
+                base_stat_map.push(e.base_stat)
+            }
+
+            //injetando os valores no html de forma agrupada em arrays
+            [qS('#st0').innerHTML,qS('#st1').innerHTML,qS('#st2').innerHTML,
+             qS('#st3').innerHTML,qS('#st4').innerHTML,qS('#st5').innerHTML]=base_stat_map;
+
+        }
+
+
+
+
 
         function cleanPokemonData() {
             setPokemonData( {sprites: undefined, name: '', stats: undefined} );
