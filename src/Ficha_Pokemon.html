@@ -109,12 +109,12 @@
 
         function setStats({stats: stat}){
             if(!stat) {
-                qS('#st0').innerHTML = '---';
-                qS('#st1').innerHTML = '---';
-                qS('#st2').innerHTML = '---';
-                qS('#st3').innerHTML = '---';
-                qS('#st4').innerHTML = '---';
-                qS('#st5').innerHTML = '---';
+                setText('#st0','---');
+                setText('#st1','---');
+                setText('#st2','---');
+                setText('#st3','---');
+                setText('#st4','---');
+                setText('#st5','---');
                 return;
             }
 
