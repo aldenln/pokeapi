@@ -105,10 +105,20 @@
         }
 
 
- //     outra solução - desconstruindo apenas stat em atributos da função, mapeando valores e transmitindo por arrays:
+ //     Revisado
 
-        function setStats({stats: stat}){
-            if(!stat) {
+        function setStats({stats: stat,
+                           stats: { 0: hp,
+                                    1: att,
+                                    2: def,
+                                    3: spa,
+                                    4: spd,
+                                    5: spe
+                                   }
+                          }){
+
+            if(!stat){
+
                 setText('#st0','---');
                 setText('#st1','---');
                 setText('#st2','---');
@@ -116,25 +126,25 @@
                 setText('#st4','---');
                 setText('#st5','---');
                 return;
+
+            }else{
+
+                const pokemon_stats = [hp,att,def,spa,spd,spe];
+
+                //mapeando valores de base_stat
+                base_stat_map = pokemon_stats.map(s=>s.base_stat);
+
+                //injetando os valores no html de forma agrupada em arrays
+                [qS('#st0').innerHTML,qS('#st1').innerHTML,
+                 qS('#st2').innerHTML,qS('#st3').innerHTML,
+                 qS('#st4').innerHTML,qS('#st5').innerHTML]=base_stat_map;
+
+
             }
-
-            //desestruturando cada stat
-            const pokemon_stats = [stat[0],stat[1],stat[2],stat[3],stat[4],stat[5]];
-
-            //mapeando valores de base_stat
-            let base_stat_map=[];
-            for (let e of pokemon_stats){
-                base_stat_map.push(e.base_stat)
-            }
-
-            //injetando os valores no html de forma agrupada em arrays
-            [qS('#st0').innerHTML,qS('#st1').innerHTML,qS('#st2').innerHTML,
-             qS('#st3').innerHTML,qS('#st4').innerHTML,qS('#st5').innerHTML]=base_stat_map;
-
         }
 
         function cleanPokemonData() {
-            setPokemonData( {name: '', sprites: {front_default: undefined}, stats: undefined} );
+            setPokemonData( {name: '', sprites: {front_default: undefined}, stats: ''} );
         }
 
         function setPokemonData( pokemonJson ) {
@@ -144,7 +154,6 @@
 
             return false;
         }
-
 
         const fetchPokeApi = (url, fn) =>  
             fetch(url)
@@ -156,8 +165,6 @@
             `https://pokeapi.co/api/v2/pokemon/${name}`,
             setPokemonData
         );
-
-
 
         window.addEventListener('load', (event) => {
             fetchPokemon('pikachu');
